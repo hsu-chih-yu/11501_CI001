@@ -1,7 +1,5 @@
 #include <iostream>
-#include <string>
 #include <algorithm>
-
 
 using namespace std;
 
@@ -9,21 +7,16 @@ int main()
 {
     int cases;
     cin >> cases;
-    int i = 1;
-    while(cases--){
-
-        char c = ' ';
-        int maxi = -1;
-        while(c == ' '){
-            int n;
-            cin >> n;
-            if(n > maxi){
-                maxi = n;
-            }
-            c = getchar();
+    for(int c = 1; c <= cases; c++){
+        int n;
+        cin >> n;
+        int maxi = 0;
+        for(int i = 0; i < n; i++){
+            int speed;
+            cin >> speed;
+            maxi = max(maxi, speed);
         }
-        printf("Case %d: %d\n", i, maxi);
-        i++;
+        printf("Case %d: %d\n", c, maxi);
     }
     return 0;
 }

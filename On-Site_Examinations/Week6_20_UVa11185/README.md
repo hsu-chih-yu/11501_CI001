@@ -7,7 +7,7 @@
 - **Problem Title:** Ternary
 - **Problem Link:** https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=24&page=show_problem&problem=2126
 - **Language / Version:** C++
-- **Submission Result:** Wrong Answer / Need Revision
+- **Submission Result:** Wrong Answer (initial) → Revised
 - **Source Code (Initial/Fail):** [src/uva11185_fail.cpp](./src/uva11185_fail.cpp)
 - **Source Code (Final/Accepted):** [src/uva11185.cpp](./src/uva11185.cpp)
 - **Review Date:** 2026-10-14

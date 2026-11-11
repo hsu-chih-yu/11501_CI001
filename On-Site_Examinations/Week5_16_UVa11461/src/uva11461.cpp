@@ -4,7 +4,7 @@
 using namespace std;
 
 bool isSquare(long long n){
-    if(n < 0)false;
+    if(n < 0) return false;
     long long r = round(sqrt(n));
     return (r* r == n);
 

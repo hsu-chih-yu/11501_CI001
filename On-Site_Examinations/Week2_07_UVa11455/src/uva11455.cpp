@@ -24,7 +24,7 @@ int main()
                 len[i+1] = temp;
             }
         }
-        int sum = len[0]+len[1]+len[2];
+        long long sum = (long long)len[0] + len[1] + len[2];
         if(sum > len[3]){
             cout << "quadrangle" << endl;
 

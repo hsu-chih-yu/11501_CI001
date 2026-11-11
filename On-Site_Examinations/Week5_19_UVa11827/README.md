@@ -7,7 +7,7 @@
 - **Problem Title:** Maximum GCD
 - **Problem Link:** https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=24&page=show_problem&problem=2927
 - **Language / Version:** C++
-- **Submission Result:** Wrong Answer / Need Revision
+- **Submission Result:** Wrong Answer (initial) → Revised
 - **Source Code (Initial/Fail):** [src/uva11827_fail.cpp](./src/uva11827_fail.cpp)
 - **Source Code (Final/Accepted):** [src/uva11827.cpp](./src/uva11827.cpp)
 - **Review Date:** 2026-10-07

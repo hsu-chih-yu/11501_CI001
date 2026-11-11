@@ -7,7 +7,7 @@
 - **Problem Title:** Ultra-QuickSort
 - **Problem Link:** https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=24&page=show_problem&problem=1751
 - **Language / Version:** C++
-- **Submission Result:** Time Limit Exceeded / Need Revision
+- **Submission Result:** Time Limit Exceeded (initial) → Revised
 - **Source Code (Initial/Fail):** [src/uva10810_fail.cpp](./src/uva10810_fail.cpp)
 - **Source Code (Final/Accepted):** [src/uva10810.cpp](./src/uva10810.cpp)
 - **Review Date:** 2026-10-21

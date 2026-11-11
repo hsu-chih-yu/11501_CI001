@@ -78,7 +78,7 @@ int main()
                     len[i+1] = temp;
             }
         }
-        int sum = len[0]+len[1]+len[2];
+        long long sum = (long long)len[0] + len[1] + len[2];
         if(sum > len[3]){
             cout << "quadrangle" << endl;
 
@@ -104,7 +104,7 @@ int main()
 ## 7. Reflection
 - **根本原因：** 四邊形條件判斷若不找出最大值，會因為需要窮舉各種組合而使程式碼雜亂。
 - **學到的教訓：** 用一次走訪把最大值推到陣列最末端（類似氣泡排序的一回合）是非常取巧且有效率的寫法。
-- **下一步行動：** 若數字範圍極大，記得計算 `sum` 時可考慮使用 `long long` 防範整數溢位。
+- **下一步行動：** 邊長為 `int`，三邊相加可能超過 `int` 上限（約 $2.1 \times 10^9$）而溢位，因此已將 `sum` 改為 `long long`，並在相加前先轉型 `(long long)len[0]`，確保運算過程不溢位。
 
 ## 8. AI Usage Disclaimer
 - 若有使用 AI 工具，僅用於輔助學習，例如釐清概念或檢查解釋。
