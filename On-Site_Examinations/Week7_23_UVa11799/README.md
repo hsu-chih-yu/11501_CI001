@@ -7,8 +7,9 @@
 - **Problem Title:** Horror Dash
 - **Problem Link:** https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=24&page=show_problem&problem=2899
 - **Language / Version:** C++
-- **Submission Result:** Accepted
-- **Source Code (Final/Accepted):** [src/uva11799.cpp](./src/uva11799.cpp)
+- **Submission Result:** Accepted (original) → Improved
+- **Source Code (Original/Accepted):** [src/uva11799_original.cpp](./src/uva11799_original.cpp)
+- **Source Code (Final/Improved):** [src/uva11799.cpp](./src/uva11799.cpp)
 - **Review Date:** 2026-10-21
 
 ## 2. Problem Statement in My Own Words
@@ -22,18 +23,19 @@
 
 ### Initial Thoughts
 
-- 小丑要追上所有人，只要速度等於最快的學生即可，所以答案就是該行的最大值。
-- 由於每行開頭的 $N$ 本身也是正整數，且 $N$ 不會影響「是否需要讀完這一行」，因此可以選擇逐行讀到換行為止。
+- 小丑要追上所有人，只要速度等於最快的學生即可，所以答案就是該行速度的最大值。
+- 原始版本以 `cin >> n` 讀數字、再用 `getchar()` 判斷後面是空白還是換行，逐行讀到行尾並維護最大值。
+- 但這樣會把每行開頭的人數 $N$ 也當成速度一起比較：若 $N$ 大於所有速度（例如 `5 1 1 1 1 1`，正確答案為 `1`），原始程式會輸出 `5`。原始版本能 AC 只是因為 UVa 測資沒有出現這種情況，屬於潛在錯誤。
 
 ### Final Strategy
 
-- 以 `cin >> n` 讀取數字，再用 `getchar()` 讀取緊接在後的字元：若是空白代表同一行還有數字，若是換行（或 EOF）則該行結束。
-- 一路維護最大值 `maxi`（初始為 -1）。
-- 注意：這個寫法會把每行開頭的 $N$ 也當成速度一起比較。若出現 $N$ 大於所有速度的測資（例如 `5 1 1 1 1 1`，正確答案為 `1`，程式卻會輸出 `5`），就會答錯；本次能 AC 是因為 UVa 測資沒有出現這種情況，屬於潛在錯誤。
+- 每行已經給了人數 $N$，因此改成先 `cin >> n`，再用 `for` 迴圈讀入恰好 $N$ 個速度。
+- 只對速度維護最大值 `maxi`，$N$ 不再參與比較。
+- 不需要判斷空白或換行，行尾多餘空白或 `\r\n` 都不會影響讀取。
 
 ### Complexity Analysis
 
-- **Time Complexity:** $O(N)$ 每筆測資，每個數字只讀取並比較一次。
+- **Time Complexity:** $O(N)$ 每筆測資，每個速度只讀取並比較一次。
 - **Space Complexity:** $O(1)$，只需保存目前最大值。
 - **解釋為何這些複雜度滿足問題限制：** $N \le 100$，運算量極小。
 
@@ -41,19 +43,18 @@
 ```
 START
 READ cases
-SET caseNo = 1
-WHILE cases > 0:
-    SET c = ' ', maxi = -1
-    WHILE c == ' ':
-        READ n
-        IF n > maxi THEN maxi = n
-        c = next character
-    PRINT "Case " + caseNo + ": " + maxi
-    caseNo = caseNo + 1
-    cases = cases - 1
+FOR c = 1 TO cases:
+    READ n
+    SET maxi = 0
+    FOR i = 1 TO n:
+        READ speed
+        maxi = max(maxi, speed)
+    PRINT "Case " + c + ": " + maxi
 END
 ```
-## 5. Correct Code
+## 5. Original Code vs Improved Code
+
+### Original Code (Accepted)
 ```cpp
 #include <iostream>
 #include <string>
@@ -85,8 +86,37 @@ int main()
     return 0;
 }
 ```
+**Potential problem:**
+- **技術原因：** 每行開頭的人數 $N$ 被當成速度一起比較；且依賴「數字後面緊接一個空白或換行」判斷行尾，遇到行尾多餘空白或 `\r\n` 就會讀錯（與 Week 5 的 UVa 11827 同類問題）。
+- **暴露問題的測資：** `5 1 1 1 1 1` → 原始程式輸出 `5`，正確答案為 `1`。
+
+### Improved Code
+```cpp
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+int main()
+{
+    int cases;
+    cin >> cases;
+    for(int c = 1; c <= cases; c++){
+        int n;
+        cin >> n;
+        int maxi = 0;
+        for(int i = 0; i < n; i++){
+            int speed;
+            cin >> speed;
+            maxi = max(maxi, speed);
+        }
+        printf("Case %d: %d\n", c, maxi);
+    }
+    return 0;
+}
+```
 **Why it works：**
-- **關鍵條件：** `getchar()` 能判斷數字後方是空白還是換行，藉此在同一行內持續讀取並維護最大值；答案即為最快學生的速度。
+- **關鍵條件：** 先讀人數 $N$，再讀恰好 $N$ 個速度，因此 $N$ 不會被誤當成速度，也不受空白與換行格式影響；答案即為最快學生的速度。
 
 ## 6. Test Evidence
 
@@ -94,12 +124,13 @@ int main()
 |---|---|---|---|---|
 | 題目範例 | `5 9 3 5 2 6` | `Case 1: 9` | `Case 1: 9` | 驗證取最大值 |
 | 最少人數 | `1 2` | `Case 2: 2` | `Case 2: 2` | 驗證只有一位學生的情況 |
+| $N$ 大於所有速度 | `5 1 1 1 1 1` | `Case 3: 1` | `Case 3: 1` | 驗證 $N$ 不會被當成速度（原始版本會輸出 `5`） |
 
 ## 7. Reflection
 
-- **根本原因：** 題目本質是求最大值，難點在於輸入格式的處理。
-- **解決辦法：** 利用 `getchar()` 偵測行尾。
-- **改進：** 目前的寫法會把 $N$ 誤當成速度比較，是潛在的錯誤。此外，依賴「數字後面緊接一個空白或換行」的讀法很脆弱（例如行尾有多餘空白或 Windows 的 `\r\n` 就會出錯，Week 5 的 UVa 11827 就踩過這個坑）。既然每行已經給了 $N$，更穩健的寫法是先 `cin >> n`，再用 `for` 迴圈讀 $N$ 個速度。
+- **根本原因：** 題目本質是求最大值，難點在於輸入格式；原始寫法忽略了每行開頭的 $N$ 本身不是速度。
+- **解決辦法：** 利用題目給的 $N$ 控制讀取次數，取代以 `getchar()` 偵測行尾。
+- **改進：** 題目有給「個數」時，優先用個數控制迴圈；只有在沒有給個數時，才改用 `getline` + `stringstream` 讀整行。AC 不代表程式完全正確，要自己設計邊界測資檢查。
 
 ## 8. AI Usage Disclaimer
 

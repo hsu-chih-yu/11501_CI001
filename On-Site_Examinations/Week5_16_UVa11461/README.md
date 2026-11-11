@@ -61,7 +61,7 @@ END
 using namespace std;
 
 bool isSquare(long long n){
-    if(n < 0)false;
+    if(n < 0) return false;
     long long r = round(sqrt(n));
     return (r* r == n);
 
@@ -101,6 +101,7 @@ int main()
 
 - **根本原因：** 雖然使用迴圈一個個檢查很直觀且正確，但對於範圍極大的區間，逐一開根號運算會增加執行時間。
 - **解決辦法：** 目前透過逐個檢查並驗證平方可正確 AC。
+- **程式修正：** 原本 `isSquare` 中寫成 `if(n < 0)false;`，少了 `return`，這行敘述沒有任何作用（編譯器會警告 statement has no effect）；因題目輸入皆為正數才未造成錯誤，已修正為 `if(n < 0) return false;`。
 - **改進：** 在數學上，$[a, b]$ 之間的平方數個數可直接利用上下界公式化簡為 $\lfloor\sqrt{b}\rfloor - \lceil\sqrt{a}\rceil + 1$（或 $\lfloor\sqrt{b}\rfloor - \lfloor\sqrt{a - 1}\rfloor$），將時間複雜度進一步最佳化至 $O(1)$。
 
 ## 8. AI Usage Disclaimer

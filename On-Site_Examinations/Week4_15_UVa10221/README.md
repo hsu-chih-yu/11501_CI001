@@ -7,7 +7,7 @@
 - **Problem Title:** Satellites
 - **Problem Link:** https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=24&page=show_problem&problem=1162
 - **Language / Version:** C++
-- **Submission Result:** Wrong Answer / Incomplete
+- **Submission Result:** Wrong Answer (initial) → Revised
 - **Source Code (Initial/Fail):** [src/uva10221_fail.cpp](./src/uva10221_fail.cpp)
 - **Source Code (Final/Accepted):** [src/uva10221.cpp](./src/uva10221.cpp)
 - **Review Date:** 2026-09-30
